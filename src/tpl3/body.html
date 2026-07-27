@@ -1,0 +1,100 @@
+<div id="topbar">
+  <div class="brand">
+    <div class="b1">Terminal Intelligence</div>
+    <div class="b2">Anonymized market map</div>
+  </div>
+  <div class="tab active" data-tab="overview">Overview</div>
+  <div class="tab" data-tab="vendors">Vendors</div>
+  <div class="tab" data-tab="technology">Technology</div>
+  <div class="tab" data-tab="pipeline">Pipeline</div>
+  <div class="tab" data-tab="database">Database</div>
+  <div class="tab" data-tab="map">Map</div>
+  <div class="tab" data-tab="methodology">Methodology</div>
+  <div class="spacer"></div>
+  <div class="meta">
+    <span><span class="livedot"></span>live snapshot <b id="meta-snapshot">—</b></span>
+    <span><b id="meta-records">—</b> terminals</span>
+    <span><b id="meta-fields">—</b> fields each</span>
+  </div>
+</div>
+
+<div id="disclosure">
+  <span><b>Synthetic dataset.</b> Geography is real (public port coordinates); every company,
+  operator and site name is replaced with a generic identifier, and all operational,
+  contractual and commercial attributes are <b>modelled</b> from a deterministic seed —
+  they are a demonstration of the data model, not observed measurements. See
+  <a href="#" data-goto="methodology">Methodology</a>.</span>
+  <span class="x" id="disclosure-x" title="dismiss">&times;</span>
+</div>
+
+<div id="filterbar">
+  <div class="fgroup"><span class="flabel">Region</span><span id="f-region"></span></div>
+  <div class="fgroup"><span class="flabel">Type</span><span id="f-type"></span></div>
+  <div class="fgroup"><span class="flabel">Status</span><span id="f-status"></span></div>
+  <div class="fgroup"><span class="flabel">Automation</span><span id="f-automation"></span></div>
+  <div class="fgroup">
+    <span class="flabel">Vendor</span>
+    <select class="fsel" id="f-vendor"></select>
+  </div>
+  <div class="fgroup">
+    <span class="flabel">Size</span>
+    <select class="fsel" id="f-size"></select>
+  </div>
+  <div class="fgroup">
+    <span class="flabel">Metric</span>
+    <select class="fsel" id="f-metric">
+      <option value="sites">Site count</option>
+      <option value="volume">Throughput</option>
+      <option value="acv">Licence value (ACV)</option>
+    </select>
+  </div>
+  <div class="fgroup"><input class="finput" id="f-search" placeholder="Search id / operator / vendor / TOS…"></div>
+  <div class="fgroup"><button class="btn" id="f-reset">Reset</button></div>
+  <div id="filter-summary"></div>
+</div>
+
+<div id="view-overview" class="view active"><div class="wrap" id="overview-root"></div></div>
+<div id="view-vendors" class="view"><div class="wrap" id="vendors-root"></div></div>
+<div id="view-technology" class="view"><div class="wrap" id="technology-root"></div></div>
+<div id="view-pipeline" class="view"><div class="wrap" id="pipeline-root"></div></div>
+<div id="view-database" class="view"><div class="wrap" id="database-root"></div></div>
+
+<div id="view-map" class="view">
+  <div id="side">
+    <h2 class="s">Live counts</h2>
+    <div id="stats"></div>
+    <h2 class="s">Scope</h2>
+    <label class="checkbox"><input type="checkbox" id="show-defunct"> Show defunct / inactive</label>
+    <label class="checkbox"><input type="checkbox" id="sync-filters" checked> Apply dashboard filters</label>
+    <h2 class="s">Facility type</h2>
+    <div>
+      <button class="toggle active" data-type="all">All</button>
+      <button class="toggle" data-type="marine">Marine</button>
+      <button class="toggle" data-type="rail">Rail</button>
+      <button class="toggle" data-type="industrial">Industrial</button>
+    </div>
+    <h2 class="s">Attribution source</h2>
+    <div>
+      <button class="toggle active" data-source="all">All</button>
+      <button class="toggle" data-source="inferred">Web-inferred</button>
+      <button class="toggle" data-source="base">Base</button>
+    </div>
+    <details class="map-legend" open><summary>Symbol legend</summary><div id="map-legend-body"></div></details>
+    <h2 class="s">Vendors <span class="muted" style="font-weight:400;text-transform:none;letter-spacing:0;">(click to isolate)</span></h2>
+    <input id="map-search" class="finput" style="width:100%;margin-bottom:6px;" placeholder="Search site id / operator…">
+    <div id="legend"></div>
+  </div>
+  <div id="map"></div>
+</div>
+
+<div id="view-methodology" class="view"><div class="wrap" id="meth-root"></div></div>
+
+<div id="tooltip"></div>
+<div id="scrim"></div>
+<div id="drawer">
+  <div class="dh">
+    <div id="drawer-head"></div>
+    <span class="x" id="drawer-x">&times;</span>
+  </div>
+  <div class="db" id="drawer-body"></div>
+</div>

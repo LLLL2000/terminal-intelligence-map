@@ -1,0 +1,25 @@
+# This repo must never carry anything from the private source map.
+# The private material lives in a different directory entirely; these rules are a
+# second line of defence in case a file is ever copied in by mistake.
+
+index2.html
+index.html.orig
+private/
+*.xlsx
+*.xls
+*.pptx
+*.docx
+*.pdf
+*.geojson
+terminals_unified.json
+osm_*.json
+
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
