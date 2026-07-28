@@ -7,6 +7,8 @@ when incumbent contracts come up for renewal.
 
 **[▶ Live demo](https://LLLL2000.github.io/terminal-intelligence-map/)**
 
+![Every terminal in the dataset, coloured by vendor — the coastlines are drawn by the ports themselves](og-preview.png)
+
 No build step, no server, no framework. One HTML file, ~1.5 MB, opens straight from disk.
 
 ---

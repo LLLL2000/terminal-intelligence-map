@@ -322,10 +322,42 @@ def read(name: str) -> str:
 JS_PARTS = ["core.js", "charts.js", "dashboard.js", "vendors.js", "technology.js",
             "pipeline.js", "database.js", "map.js", "methodology.js", "boot.js"]
 
+# Absolute URLs are mandatory in og: tags — crawlers do not resolve relative paths.
+SITE_URL = "https://llll2000.github.io/terminal-intelligence-map/"
+OG_TITLE = "Terminal Intelligence — Anonymized Market Map"
+OG_DESC = (f"Interactive dashboard over {len(terminals):,} container terminals, rail intermodal "
+           f"yards and industrial sites. {len(terminals[0])} modelled fields each: OCR channel "
+           "stack, throughput, contract position, displacement risk. Coordinates real, identities "
+           "removed, attributes modelled.")
+OG_ALT = ("World map of 1,001 port and terminal locations coloured by vendor, over a dark "
+          "background, with headline dataset statistics.")
+
+social = (
+    f'<meta name="description" content="{OG_DESC}">\n'
+    f'<meta name="theme-color" content="#0f1620">\n'
+    f'<link rel="canonical" href="{SITE_URL}">\n'
+    f'<meta property="og:type" content="website">\n'
+    f'<meta property="og:site_name" content="Terminal Intelligence">\n'
+    f'<meta property="og:title" content="{OG_TITLE}">\n'
+    f'<meta property="og:description" content="{OG_DESC}">\n'
+    f'<meta property="og:url" content="{SITE_URL}">\n'
+    f'<meta property="og:image" content="{SITE_URL}og-preview.png">\n'
+    f'<meta property="og:image:type" content="image/png">\n'
+    f'<meta property="og:image:width" content="1200">\n'
+    f'<meta property="og:image:height" content="630">\n'
+    f'<meta property="og:image:alt" content="{OG_ALT}">\n'
+    f'<meta name="twitter:card" content="summary_large_image">\n'
+    f'<meta name="twitter:title" content="{OG_TITLE}">\n'
+    f'<meta name="twitter:description" content="{OG_DESC}">\n'
+    f'<meta name="twitter:image" content="{SITE_URL}og-preview.png">\n'
+    f'<meta name="twitter:image:alt" content="{OG_ALT}">\n'
+)
+
 out = (
     "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n"
     "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n"
     "<title>Terminal Intelligence — Anonymized Market Map</title>\n"
+    + social +
     "<link rel=\"stylesheet\" href=\"https://unpkg.com/leaflet@1.9.4/dist/leaflet.css\"/>\n"
     "<style>\n" + read("styles.css") + "\n</style>\n</head>\n<body>\n"
     + read("body.html")
@@ -338,8 +370,13 @@ out = (
 DST.write_text(out, encoding="utf-8")
 DATA_DST.write_text(json.dumps(terminals, ensure_ascii=False, indent=1), encoding="utf-8")
 
+# Social-preview card, regenerated from the same data so it can never drift from
+# the numbers the page reports.
+import make_og                                    # noqa: E402
+og = make_og.build(DATA_DST, ROOT / "og-preview.png", new_colors)
+
 print(f"anonymized  : {company_counter} vendor buckets, {len(op_cache)} operators mapped")
 print(f"extended    : +{added} locations (of {len(PORTS)} candidates; rest within {DEDUPE_KM} km of an existing site)")
 print(f"enriched    : {len(terminals)} records x {len(terminals[0])} fields")
 print(f"regions     : " + ", ".join(f"{r}={sum(1 for t in terminals if t['region']==r)}" for r in REGION_ORDER))
-print(f"wrote       : {DST.name} ({len(out):,} chars) + {DATA_DST.name}")
+print(f"wrote       : {DST.name} ({len(out):,} chars) + {DATA_DST.name} + {og.name} ({og.stat().st_size/1024:.0f} KB)")
